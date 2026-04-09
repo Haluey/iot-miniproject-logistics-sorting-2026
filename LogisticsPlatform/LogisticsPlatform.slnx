@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="AutoSortingSimulator/AutoSortingSimulator.vcxproj" Id="d4967c7b-fbfb-4d3a-864f-c5fe78d0f6b5" />
+</Solution>
