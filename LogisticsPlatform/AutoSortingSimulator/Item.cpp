@@ -1,49 +1,13 @@
 #include "Item.h"
-
-// 문자열 변환 함수
-std::string toString(enum ItemType type) {
-	switch (type) {
-	case Unknown:
-		return "Unknown";
-	case Food:
-		return "Food";
-	case Electronics:
-		return "Electronics";
-	case Fragile:
-		return "Fragile";
-	default:
-		return "InvalidType";
-	}
-}
-
-std::string toString(enum ItemStatus status) {
-	switch (status) {
-	case Created:
-		return "Created";
-	case Queued:
-		return "Queued";
-	case Processing:
-		return "Processing";
-	case Sorted:
-		return "Sorted";
-	case Saved:
-		return "Saved";
-	default:
-		return "InvalidStatus";
-	}
-}
-
-std::string toString(bool flag) {
-	return flag ? "true" : "false";
-}
+#include "ItemUtils.h"
 
 // Item 클래스 멤버 함수
-Item::Item(int itemId, enum ItemType type, double weight, bool isFragile) {
+Item::Item(int itemId, ItemType type, double weight, bool isFragile) {
 	this->itemId = itemId;
 	this->type = type;
 	this->weight = weight;
 	this->isFragile = isFragile;
-	status = Created;
+	status = ItemStatus::Created;
 }
 
 Item::~Item() {}
@@ -55,37 +19,43 @@ void Item::showInfo() {
 }
 
 // 상태 변경
-void Item::setStatus(enum ItemStatus newStatus) {
+void Item::setStatus(ItemStatus newStatus) {
 	status = newStatus;
 }
 
 // 유효성 확인
 bool Item::isValid() {
-	//bool idValid = false, typeValid = false, weightValid = false;
+	/*
+	bool idValid = false, typeValid = false, weightValid = false;
 
-	//// 공통 유효성 검사
-	//// itemId가 음수가 아닌지
-	//if (itemId >= 0) {
-	//	idValid = true;
-	//}
+	// 공통 유효성 검사
+	// itemId가 음수가 아닌지
+	if (itemId >= 0) {
+		idValid = true;
+	}
 
-	//// type이 Unknown이 아닌지
-	//if (type != Unknown) {
-	//	typeValid = true;
-	//}
+	// type이 Unknown이 아닌지
+	if (type != ItemType::Unknown) {
+		typeValid = true;
+	}
 
-	//// weight가 0보다 큰지
-	//if (weight > 0) {
-	//	weightValid = true;
-	//}
+	// weight가 0보다 큰지
+	if (weight > 0) {
+		weightValid = true;
+	}
 
-	//// 최종 유효성 확인
-	//if (idValid && typeValid && weightValid) {
-	//	return true;
-	//}
-	//else {
-	//	return false;
-	//}
-
-	return (itemId >= 0) && (type != Unknown) && (weight > 0);
+	// 최종 유효성 확인
+	if (idValid && typeValid && weightValid) {
+		return true;
+	}
+	else {
+		return false;
+	}
+	*/
+	return (itemId >= 0) && (type != ItemType::Unknown) && (weight > 0);
 }
+
+// Getter
+double Item::getWeight() const { return weight; }
+
+bool Item::getIsFragile() const { return isFragile; }

@@ -130,7 +130,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="ConveyorSystem.cpp" />
+    <ClCompile Include="Electronics.cpp" />
+    <ClCompile Include="Food.cpp" />
+    <ClCompile Include="Fragile.cpp" />
+    <ClCompile Include="Item.cpp" />
+    <ClCompile Include="ItemFactory.cpp" />
+    <ClCompile Include="ItemUtils.cpp" />
     <ClCompile Include="main.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="ConveyorSystem.h" />
+    <ClInclude Include="Electronics.h" />
+    <ClInclude Include="Food.h" />
+    <ClInclude Include="Fragile.h" />
+    <ClInclude Include="Item.h" />
+    <ClInclude Include="ItemFactory.h" />
+    <ClInclude Include="ItemUtils.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

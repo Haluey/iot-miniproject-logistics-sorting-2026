@@ -3,14 +3,14 @@
 
 #include <iostream>
 
-enum ItemType {
+enum class ItemType {
 	Unknown,
 	Food,
 	Electronics,
 	Fragile
 };
 
-enum ItemStatus {
+enum class ItemStatus {
 	Created,	// 생성 직후
 	Queued,		// 대기열 등록
 	Processing,	// 물품 분류 중
@@ -21,21 +21,30 @@ enum ItemStatus {
 class Item {
 protected:
 	int itemId;
-	enum ItemType type;
+	ItemType type;
 	double weight;
 	bool isFragile;
-	enum ItemStatus status;
+	ItemStatus status;
 	
 public:
-	Item(int itemId, enum ItemType type, double weight, bool isFragile);
+	Item(int itemId, ItemType type, double weight, bool isFragile);
+
 	// 가상 소멸자
 	virtual ~Item();
+
 	// 기본정보 확인
 	virtual void showInfo();
+
 	// 상태 변경
-	void setStatus(enum ItemStatus newStatus);
+	void setStatus(ItemStatus newStatus);
+
 	// 유효성 확인
 	virtual bool isValid();	
+
+	// Getter
+	double getWeight() const;
+
+	bool getIsFragile() const;
 };
 
 #endif

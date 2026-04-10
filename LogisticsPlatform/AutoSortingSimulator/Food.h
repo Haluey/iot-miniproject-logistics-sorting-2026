@@ -8,7 +8,7 @@ private:
 
 
 public:
-	Food(int itemId, enum ItemType type, double weight, bool isFragile);
+	Food(int itemId, double weight, bool isFragile);
 
 	// 기본정보 확인
 	void showInfo() override;
