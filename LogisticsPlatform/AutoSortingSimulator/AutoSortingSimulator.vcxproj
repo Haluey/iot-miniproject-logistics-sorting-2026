@@ -108,10 +108,13 @@
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpp20</LanguageStandard>
+      <AdditionalIncludeDirectories>C:\DEV\LIB\mysql-connector-c++-9.6.0-winx64-debug\include;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
       <GenerateDebugInformation>true</GenerateDebugInformation>
+      <AdditionalLibraryDirectories>C:\DEV\LIB\mysql-connector-c++-9.6.0-winx64-debug\lib64\debug\vs14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>mysqlcppconn.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -131,6 +134,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="ConveyorSystem.cpp" />
+    <ClCompile Include="DatabaseManager.cpp" />
     <ClCompile Include="Electronics.cpp" />
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="Fragile.cpp" />
@@ -138,15 +142,19 @@
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemUtils.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="Sorter.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="CommonTypes.h" />
     <ClInclude Include="ConveyorSystem.h" />
+    <ClInclude Include="DatabaseManager.h" />
     <ClInclude Include="Electronics.h" />
     <ClInclude Include="Food.h" />
     <ClInclude Include="Fragile.h" />
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="ItemUtils.h" />
+    <ClInclude Include="Sorter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

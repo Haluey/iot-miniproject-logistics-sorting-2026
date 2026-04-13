@@ -1,5 +1,15 @@
 #include "ConveyorSystem.h"
 
+// 비었는지 확인 함수
+bool ConveyorSystem::isEmpty() const {
+	return conveyorQueue.empty();
+}
+
+// 현재 개수 확인 함수
+size_t ConveyorSystem::getSize() const {
+	return conveyorQueue.size();
+}
+
 // 물품 등록 함수
 void ConveyorSystem::enqueueItem(std::shared_ptr<Item> incomingItem) {
 	if (incomingItem == nullptr) {
@@ -25,16 +35,6 @@ std::shared_ptr<Item> ConveyorSystem::dequeueItem() {
 		std::cout << "현재 큐는 비어있습니다." << std::endl;
 		return nullptr;
 	}
-}
-
-// 비었는지 확인 함수
-bool ConveyorSystem::isEmpty() const {
-	return conveyorQueue.empty();
-}
-
-// 현재 개수 확인 함수
-size_t ConveyorSystem::getSize() const{
-	return conveyorQueue.size();
 }
 
 // 맨 앞 확인 - 디버깅용. 나중에 반환?

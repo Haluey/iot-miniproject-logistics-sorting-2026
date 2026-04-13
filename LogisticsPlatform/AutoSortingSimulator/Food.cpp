@@ -1,5 +1,4 @@
 #include "Food.h"
-#include "ItemUtils.h"
 
 Food::Food(int itemId, double weight, bool isFragile)
 	:Item(itemId, ItemType::Food, weight, isFragile) {}

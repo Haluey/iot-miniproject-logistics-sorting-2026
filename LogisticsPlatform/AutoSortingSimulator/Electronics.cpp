@@ -1,5 +1,4 @@
 #include "Electronics.h"
-#include "ItemUtils.h"
 
 Electronics::Electronics(int itemId, double weight, bool isFragile)
 	:Item(itemId, ItemType::Electronics, weight, isFragile) {}

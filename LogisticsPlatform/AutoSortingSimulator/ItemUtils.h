@@ -1,8 +1,7 @@
 #ifndef ITEMUTILS_H
 #define ITEMUTILS_H
 
-#include "Item.h"
-#include "sorter.h"
+#include "CommonTypes.h"
 
 // 문자열 변환 함수
 std::string toString(ItemType type);

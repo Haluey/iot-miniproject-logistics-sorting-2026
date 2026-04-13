@@ -35,7 +35,7 @@ double ItemFactory::generateRandomWeight() {
 
 // 랜덤 bool 함수
 bool ItemFactory::generateRandomBool() {
-	std::uniform_int_distribution<int> dist(0, 1);
+	std::bernoulli_distribution dist(0.2);	// true가 나올 확률: 20%
 
 	//return dist(gen) ? true : false;
 	return dist(gen);
@@ -52,6 +52,8 @@ ItemFactory::ItemFactory() : nextId(1) {
 std::shared_ptr<Item> ItemFactory::createItemByType(ItemType type, double weight, bool isFragile) {
 	switch (type) {
 	case ItemType::Food:
+		// 객체를 힙에 생성하고, shared_ptr로 안전하게 관리하면서 
+		// 부모 타입(shared_ptr<Item>)으로 반환하기 위한 코드
 		return std::make_shared<Food>(generateId(), weight, isFragile);
 		
 	case ItemType::Electronics:

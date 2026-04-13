@@ -1,6 +1,6 @@
 #include "ItemUtils.h"
 
-// 문자열 변환 함수
+// 문자열 변환 함수(오버로딩)
 std::string toString(ItemType type) {
 	switch (type) {
 	case ItemType::Unknown:
@@ -34,11 +34,13 @@ std::string toString(ItemStatus status) {
 }
 
 std::string toString(bool flag) {
-	return flag ? "true" : "false";
+	return flag ? "TRUE" : "FALSE";
 }
 
 std::string toString(SortingLine line) {
 	switch (line) {
+	case SortingLine::Unassigned:
+		return "Unassigned";
 	case SortingLine::FragileLine:
 		return "FragileLine";
 	case SortingLine::CautionLine:

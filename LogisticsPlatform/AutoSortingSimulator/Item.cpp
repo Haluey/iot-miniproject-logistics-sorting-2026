@@ -1,26 +1,21 @@
 #include "Item.h"
-#include "ItemUtils.h"
+#include <cmath>
 
 // Item 클래스 멤버 함수
-Item::Item(int itemId, ItemType type, double weight, bool isFragile) {
-	this->itemId = itemId;
+Item::Item(ItemType type, double weight, bool isFragile) {
 	this->type = type;
-	this->weight = weight;
+	this->weight = round(weight * 100) / 100;
 	this->isFragile = isFragile;
 	status = ItemStatus::Created;
+	sortingLine = SortingLine::Unassigned;
 }
 
 Item::~Item() {}
 
 // 기본정보 확인
 void Item::showInfo() {
-	std::cout << "[Item] ID : " << itemId << ", Type : " << toString(type) << ", Weight : " << weight 
+	std::cout << "[Item] " << "Type : " << toString(type) << ", Weight : " << weight 
 			<< "kg, Fragile : " << toString(isFragile) << ", Status : " << toString(status) << std::endl;
-}
-
-// 상태 변경
-void Item::setStatus(ItemStatus newStatus) {
-	status = newStatus;
 }
 
 // 유효성 확인
@@ -52,10 +47,22 @@ bool Item::isValid() {
 		return false;
 	}
 	*/
-	return (itemId >= 0) && (type != ItemType::Unknown) && (weight > 0);
+	return (type != ItemType::Unknown) && (weight > 0);
 }
 
+// Setter
+void Item::setStatus(ItemStatus newStatus) { status = newStatus; }
+
+void Item::setSortingLine(SortingLine newsortingLine) { sortingLine = newsortingLine; }
+
 // Getter
+
+ItemType Item::getType() const { return type; }
+
 double Item::getWeight() const { return weight; }
 
 bool Item::getIsFragile() const { return isFragile; }
+
+ItemStatus Item::getStatus() const { return status; }
+
+SortingLine Item::getSortingLine() const { return sortingLine; }

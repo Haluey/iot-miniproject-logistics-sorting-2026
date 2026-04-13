@@ -1,5 +1,4 @@
 #include "Fragile.h"
-#include "ItemUtils.h"
 
 Fragile::Fragile(int itemId, double weight, bool isFragile)
 	:Item(itemId, ItemType::Fragile, weight, isFragile) {}
