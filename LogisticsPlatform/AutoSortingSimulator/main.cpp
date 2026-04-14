@@ -9,9 +9,11 @@ int main(void) {
 	ItemFactory itemFactory;
 	ConveyorSystem conveyorSystem;
 	Sorter sorter;
-	DatabaseManager databaseManeger;
-	databaseManeger.connect();
+	DatabaseManager databaseManager;
+	
 	int processedCount = 1;
+
+	if (!databaseManager.connect()) return 1;
 
 	std::cout << "===== Creation Phase =====" << std::endl;
 	for (int i = 0; i < 5; i++) {
@@ -37,15 +39,32 @@ int main(void) {
 		currentItem->setStatus(ItemStatus::Sorted);
 		std::cout << "[SORT] Assigned Line: " << toString(currentItem->getSortingLine()) << std::endl;
 
-		databaseManeger.saveItem(*currentItem);
-		// ItemStatus를 Saved로 바꾸어야 하지 않는가?
-
-		std::cout << "[VALID] " << toString(currentItem->isValid()) << std::endl;
+		bool isItemValid = currentItem->isValid();
+		std::cout << "[VALID] " << toString(isItemValid) << std::endl;
+		if (isItemValid) {
+			currentItem->setStatus(ItemStatus::Saved);
+			// 매개변수는 참조자가 맞지만, currentItem의 타입이 포인터기 때문에
+			// 실제 Item 객체를 참조로 받겠다라는 의미로 *(포인터 연산자)를 붙임
+			databaseManager.saveItem(*currentItem);
+		}
+		else {
+			std::cout << "[SAVE] Invalid item. Save skipped." << std::endl;
+		}			
 
 		std::cout << "----------------------------------------" << std::endl;
 	}
 
-	databaseManeger.disconnect();
+	std::cout << "===== Statistics =====" << std::endl;
+	databaseManager.printLineStatistics();
+	databaseManager.printTypeStatistics();
+	databaseManager.printWeightStatistics();
+
+	std::cout << "===== Query Results =====" << std::endl;
+	databaseManager.printItemsByLine("FragileLine");
+	databaseManager.printTopNHeaviestItems(3);
+	databaseManager.printRecentItems(5);
+
+	databaseManager.disconnect();
 	
 	return 0;
 }

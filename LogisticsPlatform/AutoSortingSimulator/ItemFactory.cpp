@@ -4,11 +4,6 @@
 #include "Fragile.h"
 
 // 클래스 내부 함수
-// ID 생성/관리 함수
-int ItemFactory::generateId() {
-	return nextId++;
-}
-
 // 랜덤 타입 함수
 ItemType ItemFactory::generateRandomType() {
 	std::uniform_int_distribution<int> dist(0, 2);
@@ -43,7 +38,7 @@ bool ItemFactory::generateRandomBool() {
 
 // 클래스 외부 함수
 // 생성자
-ItemFactory::ItemFactory() : nextId(1) {
+ItemFactory::ItemFactory() {
 	std::random_device rd;		// seed 생성기
 	gen = std::mt19937(rd());	// 엔진 초기화
 }
@@ -54,13 +49,13 @@ std::shared_ptr<Item> ItemFactory::createItemByType(ItemType type, double weight
 	case ItemType::Food:
 		// 객체를 힙에 생성하고, shared_ptr로 안전하게 관리하면서 
 		// 부모 타입(shared_ptr<Item>)으로 반환하기 위한 코드
-		return std::make_shared<Food>(generateId(), weight, isFragile);
+		return std::make_shared<Food>(weight, isFragile);
 		
 	case ItemType::Electronics:
-		return std::make_shared<Electronics>(generateId(), weight, isFragile);
+		return std::make_shared<Electronics>(weight, isFragile);
 
 	case ItemType::Fragile:
-		return std::make_shared<Fragile>(generateId(), weight, isFragile);
+		return std::make_shared<Fragile>(weight, isFragile);
 
 	default:
 		return nullptr;

@@ -8,7 +8,7 @@ private:
 
 
 public:
-	Electronics(int itemId, double weight, bool isFragile);
+	Electronics(double weight, bool isFragile);
 
 	// 기본정보 확인
 	void showInfo() override;

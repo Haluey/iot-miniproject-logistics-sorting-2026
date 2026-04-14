@@ -1,11 +1,11 @@
 #include "Fragile.h"
 
-Fragile::Fragile(int itemId, double weight, bool isFragile)
-	:Item(itemId, ItemType::Fragile, weight, isFragile) {}
+Fragile::Fragile(double weight, bool isFragile)
+	:Item(ItemType::Fragile, weight, isFragile) {}
 
 // 기본정보 확인
 void Fragile::showInfo() {
-	std::cout << "[Fragile] ID : " << itemId << ", Type : " << toString(type) << ", Weight : " << weight
+	std::cout << "[Fragile] " << "Type : " << toString(type) << ", Weight : " << weight
 		<< "kg, Fragile : " << toString(isFragile) << ", Status : " << toString(status) << std::endl;
 	std::cout << "Warning : Handle with care" << std::endl;
 }

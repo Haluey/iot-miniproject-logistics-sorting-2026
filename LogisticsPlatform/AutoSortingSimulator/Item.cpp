@@ -24,11 +24,6 @@ bool Item::isValid() {
 	bool idValid = false, typeValid = false, weightValid = false;
 
 	// 공통 유효성 검사
-	// itemId가 음수가 아닌지
-	if (itemId >= 0) {
-		idValid = true;
-	}
-
 	// type이 Unknown이 아닌지
 	if (type != ItemType::Unknown) {
 		typeValid = true;
@@ -56,7 +51,6 @@ void Item::setStatus(ItemStatus newStatus) { status = newStatus; }
 void Item::setSortingLine(SortingLine newsortingLine) { sortingLine = newsortingLine; }
 
 // Getter
-
 ItemType Item::getType() const { return type; }
 
 double Item::getWeight() const { return weight; }

@@ -6,11 +6,7 @@
 
 class ItemFactory {
 private:
-	int nextId;
 	std::mt19937 gen;	// 랜덤 엔진
-	
-	// ID 생성/관리 함수
-	int generateId();
 
 	// 랜덤 타입 함수
 	ItemType generateRandomType();

@@ -13,7 +13,7 @@ size_t ConveyorSystem::getSize() const {
 // 물품 등록 함수
 void ConveyorSystem::enqueueItem(std::shared_ptr<Item> incomingItem) {
 	if (incomingItem == nullptr) {
-		std::cout << "유효하지 않은 물품입니다" << std::endl;
+		std::cout << "[QUEUE] Invalid item. Enqueue skipped." << std::endl;
 		return;
 	}
 	else {
@@ -32,7 +32,7 @@ std::shared_ptr<Item> ConveyorSystem::dequeueItem() {
 		return item;
 	}
 	else {
-		std::cout << "현재 큐는 비어있습니다." << std::endl;
+		std::cout << "[QUEUE] Queue is empty." << std::endl;
 		return nullptr;
 	}
 }
@@ -40,11 +40,11 @@ std::shared_ptr<Item> ConveyorSystem::dequeueItem() {
 // 맨 앞 확인 - 디버깅용. 나중에 반환?
 void ConveyorSystem::peekItem() {
 	if (!isEmpty()) {
-		std::cout << "현재 큐의 맨 앞 데이터 : ";
+		std::cout << "[QUEUE] Front item: ";
 		(conveyorQueue.front())->showInfo();
 	}
 	else {
-		std::cout << "현재 큐는 비어있습니다." << std::endl;
+		std::cout << "[QUEUE] Queue is empty." << std::endl;
 	}	
 }
 
