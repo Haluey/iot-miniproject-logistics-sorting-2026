@@ -1,3 +1,6 @@
+// ItemFactory를 통해 객체 생성 책임을 별도 클래스로 분리하였으며,
+// Factory 패턴의 아이디어를 반영한 구조로 구현
+
 #ifndef ITEMFACTORY_H
 #define ITEMFACTORY_H
 

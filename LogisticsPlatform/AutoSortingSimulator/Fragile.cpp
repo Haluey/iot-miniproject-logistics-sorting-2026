@@ -4,14 +4,16 @@ Fragile::Fragile(double weight, bool isFragile)
 	:Item(ItemType::Fragile, weight, isFragile) {}
 
 // 기본정보 확인
-void Fragile::showInfo() {
-	std::cout << "[Fragile] " << "Type : " << toString(type) << ", Weight : " << weight
-		<< "kg, Fragile : " << toString(isFragile) << ", Status : " << toString(status) << std::endl;
-	std::cout << "Warning : Handle with care" << std::endl;
+void Fragile::showInfo() const {
+	std::cout << "[Fragile] " << "Type: " << toString(type)
+		<< ", Weight: " << weight << " kg"
+		<< ", Fragile: " << toString(isFragile)
+		<< ", Status: " << toString(status)
+		<< ", Warning: Handle with care" << std::endl;
 }
 
 // 유효성 확인
-bool Fragile::isValid() {
+bool Fragile::isValid() const {
 	/*
 	bool fragileValid = false;
 

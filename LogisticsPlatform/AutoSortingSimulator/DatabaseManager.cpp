@@ -1,5 +1,4 @@
 #include "DatabaseManager.h"
-#include <iomanip>
 
 DatabaseManager::DatabaseManager()
 	: driver(nullptr),
@@ -21,6 +20,7 @@ bool DatabaseManager::connect() {
 		conn->setSchema(schemaName);
 
 		std::cout << "[DB] Connection established." << std::endl;
+		std::cout << std::endl;
 		
 		return true;
 	}
@@ -81,15 +81,15 @@ void DatabaseManager::saveItem(const Item& item) {
 
 // 통계 조회 함수
 // 라인별 개수 조회
-void DatabaseManager::printLineStatistics() {
+std::vector<LineStatistic> DatabaseManager::getLineStatistics() {
+	std::vector<LineStatistic> results;
+
 	if (!conn) {
 		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 Statement 객체 생성
 		std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
@@ -100,45 +100,39 @@ void DatabaseManager::printLineStatistics() {
 				" GROUP BY sorting_line"
 				" ORDER BY COUNT(*) DESC"
 			)
-		);
-
-		// 출력
-		std::cout << "===== Line Statistics =====" << std::endl;
+		);		
 
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			LineStatistic stat;
+			stat.lineName = res->getString(1);
+			stat.itemCount = res->getInt(2);
 
-			std::string lineName = res->getString(1);
-			int itemCount = res->getInt(2);
-
-			std::cout << lineName << " : " << itemCount << std::endl;
+			results.push_back(stat);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No results found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
 		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}
 }
 
 // 타입별 개수 조회
-void DatabaseManager::printTypeStatistics() {
+std::vector<TypeStatistic> DatabaseManager::getTypeStatistics() {
+	std::vector<TypeStatistic> results;
+
 	if (!conn) {
 		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 Statement 객체 생성
 		std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
@@ -151,43 +145,37 @@ void DatabaseManager::printTypeStatistics() {
 			)
 		);
 
-		// 출력
-		std::cout << "===== Type Statistics =====" << std::endl;
-
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			TypeStatistic stat;
+			stat.typeName = res->getString(1);
+			stat.itemCount = res->getInt(2);
 
-			std::string typeName = res->getString(1);
-			int itemCount = res->getInt(2);
-
-			std::cout << typeName << " : " << itemCount << std::endl;
+			results.push_back(stat);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No results found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
 		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}
 }
 
 // 라인별 평균 무게 조회
-void DatabaseManager::printWeightStatistics() {
+std::vector<WeightStatistic> DatabaseManager::getWeightStatistics() {
+	std::vector<WeightStatistic> results;
+
 	if (!conn) {
 		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 Statement 객체 생성
 		std::unique_ptr<sql::Statement> stmt(conn->createStatement());
 
@@ -200,52 +188,46 @@ void DatabaseManager::printWeightStatistics() {
 			)
 		);
 
-		// 출력
-		std::cout << "===== Weight Statistics =====" << std::endl;
-
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			WeightStatistic stat;
+			stat.lineName = res->getString(1);
+			stat.averageWeight = res->getDouble(2);
 
-			std::string lineName = res->getString(1);
-			double averageWeight = res->getDouble(2);
-
-			std::cout << lineName << " : " 
-					<< std::fixed << std::setprecision(2) // 소수점 2자리로 고정
-					<< averageWeight << " kg" << std::endl;
+			results.push_back(stat);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No results found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
 		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}	
 }
 
-// 특정조건 조회 함수
-// 특정 라인에 배정된 물품만 조회
-void DatabaseManager::printItemsByLine(const std::string& lineName) {
+// 조건 기반 조회 함수
+// 특정 라인에 배정된 물품 조회
+std::vector<ItemRecord> DatabaseManager::getItemsByLine(const std::string& lineName) {
+	std::vector<ItemRecord> results;
+	
 	if (!conn) {
-		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		std::cout << "[QUERY] No database connection." << std::endl;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 PreparedStatement 객체 생성
 		std::unique_ptr<sql::PreparedStatement> pstmt(
 			conn->prepareStatement(
 				"SELECT item_type, weight, is_fragile"
 				"     , status, sorting_line"
-				"	  , CONVERT_TZ(saved_at, '+00:00', '+09:00')"	// CONVERT_TZ(시간, 원래시간대, 바꿀시간대)
+				// CONVERT_TZ(시간, 원래시간대, 바꿀시간대)
+				// DB 저장 시간은 UTC 기준, 조회 시 KST 변환
+				"	  , CONVERT_TZ(saved_at, '+00:00', '+09:00')"	
 				"  FROM items"
 				" WHERE sorting_line = ?"
 				" ORDER BY saved_at DESC"
@@ -257,58 +239,48 @@ void DatabaseManager::printItemsByLine(const std::string& lineName) {
 			pstmt->executeQuery()
 		);
 
-		// 출력
-		std::cout << "===== Items in " << lineName << " =====" << std::endl;
-
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			ItemRecord record;
 
-			std::string typeName = res->getString(1);
-			double weight = res->getDouble(2);
-			bool fragileFlag = res->getBoolean(3);
-			std::string statusName = res->getString(4);
-			std::string resultLineName = res->getString(5);
-			std::string savedAt = res->getString(6);
+			record.typeName = res->getString(1);
+			record.weight = res->getDouble(2);
+			record.fragileFlag = res->getBoolean(3);
+			record.statusName = res->getString(4);
+			record.lineName = res->getString(5);
+			record.savedAt = res->getString(6);
 
-			std::cout << "Type: " << typeName
-					<< ", Weight: "
-					<< std::fixed << std::setprecision(2)
-					<< weight << " kg, "
-					<< "Fragile: " << toString(fragileFlag)
-					<< ", Status: " << statusName
-					<< ", Line: " << resultLineName
-					<< ", Saved At: "<< savedAt << std::endl;
+			results.push_back(record);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No matching items found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
-		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
+		std::cout << "[QUERY] Failed to retrieve data." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}
 }
 
-// Top N 조회
-void DatabaseManager::printTopNHeaviestItems(int limit) {
+// 무게 상위 N개 물품 조회
+std::vector<ItemRecord> DatabaseManager::getTopNHeaviestItems(int limit) {
+	std::vector<ItemRecord> results;
+	
 	if (!conn) {
-		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		std::cout << "[QUERY] No database connection." << std::endl;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 PreparedStatement 객체 생성
 		std::unique_ptr<sql::PreparedStatement> pstmt(
 			conn->prepareStatement(
 				"SELECT item_type, weight, sorting_line"
+				// CONVERT_TZ(시간, 원래시간대, 바꿀시간대)
+				// DB 저장 시간은 UTC 기준, 조회 시 KST 변환
 				"     , CONVERT_TZ(saved_at, '+00:00', '+09:00')"
 				"  FROM items"
 				" ORDER BY weight DESC"
@@ -321,54 +293,46 @@ void DatabaseManager::printTopNHeaviestItems(int limit) {
 			pstmt->executeQuery()
 		);
 
-		// 출력
-		std::cout << "===== Top "<< limit <<" Heaviest Items =====" << std::endl;
-
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			ItemRecord record;
 
-			std::string typeName = res->getString(1);
-			double weight = res->getDouble(2);
-			std::string lineName = res->getString(3);
-			std::string savedAt = res->getString(4);
+			record.typeName = res->getString(1);
+			record.weight = res->getDouble(2);
+			record.lineName = res->getString(3);
+			record.savedAt = res->getString(4);
 
-			std::cout << "Type: "<< typeName
-					<< ", Weight: "
-					<< std::fixed << std::setprecision(2)
-					<< weight << " kg"
-					<< ", Line: " << lineName
-					<< ", Saved At: " << savedAt << std::endl;
+			results.push_back(record);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No matching items found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
-		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
+		std::cout << "[QUERY] Failed to retrieve data." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}
 }
 
 // 최근 저장된 물품 조회
-void DatabaseManager::printRecentItems(int limit) {
+std::vector<ItemRecord> DatabaseManager::getRecentItems(int limit) {
+	std::vector<ItemRecord> results;
+
 	if (!conn) {
-		std::cout << "[STAT] No database connection." << std::endl;
-		return;
+		std::cout << "[QUERY] No database connection." << std::endl;
+		return results;
 	}
 
 	try {
-		bool hasResult = false;
-
 		// SQL을 실행할 PreparedStatement 객체 생성
 		std::unique_ptr<sql::PreparedStatement> pstmt(
 			conn->prepareStatement(
 				"SELECT item_type, weight, sorting_line, status"
+				// CONVERT_TZ(시간, 원래시간대, 바꿀시간대)
+				// DB 저장 시간은 UTC 기준, 조회 시 KST 변환
 				"	  , CONVERT_TZ(saved_at, '+00:00', '+09:00')"
 				"  FROM items"
 				" ORDER BY saved_at DESC"
@@ -381,38 +345,27 @@ void DatabaseManager::printRecentItems(int limit) {
 			pstmt->executeQuery()
 		);
 
-		// 출력
-		std::cout << "===== Recent " << limit << " Items =====" << std::endl;
-
 		// res->next() : 다음 행으로 이동하는 함수
 		while (res->next()) {
-			hasResult = true;
+			ItemRecord record;
 
-			std::string typeName = res->getString(1);
-			double weight = res->getDouble(2);
-			std::string lineName = res->getString(3);
-			std::string statusName = res->getString(4);
-			std::string savedAt = res->getString(5);
+			record.typeName = res->getString(1);
+			record.weight = res->getDouble(2);
+			record.lineName = res->getString(3);
+			record.statusName = res->getString(4);
+			record.savedAt = res->getString(5);
 
-			std::cout << "Type: " << typeName
-					<< ", Weight: " 
-					<< std::fixed << std::setprecision(2)
-					<< weight << " kg"
-					<< ", Line: " << lineName
-					<< ", Status: " << statusName
-					<< ", Saved At: " << savedAt << std::endl;
+			results.push_back(record);
 		}
 
-		if (!hasResult) {
-			std::cout << "[QUERY] No matching items found." << std::endl;
-		}
-
-		std::cout << std::endl;
+		return results;
 	}
 	catch (sql::SQLException& e) {
-		std::cout << "[STAT] Failed to retrieve statistics." << std::endl;
+		std::cout << "[QUERY] Failed to retrieve data." << std::endl;
 		std::cout << "Error: " << e.what() << std::endl;
 		std::cout << "Error Code: " << e.getErrorCode() << std::endl;
 		std::cout << "SQLState: " << e.getSQLState() << std::endl;
+
+		return results;
 	}
 }

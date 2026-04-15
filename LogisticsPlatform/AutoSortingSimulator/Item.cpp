@@ -13,13 +13,15 @@ Item::Item(ItemType type, double weight, bool isFragile) {
 Item::~Item() {}
 
 // 기본정보 확인
-void Item::showInfo() {
-	std::cout << "[Item] " << "Type : " << toString(type) << ", Weight : " << weight 
-			<< "kg, Fragile : " << toString(isFragile) << ", Status : " << toString(status) << std::endl;
+void Item::showInfo() const {
+	std::cout << "[Item] " << "Type: " << toString(type) 
+			<< ", Weight: " << weight << " kg" 
+			<< ", Fragile: " << toString(isFragile) 
+			<< ", Status: " << toString(status) << std::endl;
 }
 
 // 유효성 확인
-bool Item::isValid() {
+bool Item::isValid() const {
 	/*
 	bool idValid = false, typeValid = false, weightValid = false;
 

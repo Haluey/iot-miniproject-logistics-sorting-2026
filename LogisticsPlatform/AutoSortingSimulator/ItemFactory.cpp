@@ -1,3 +1,6 @@
+// ItemFactory를 통해 객체 생성 책임을 별도 클래스로 분리하였으며,
+// Factory 패턴의 아이디어를 반영한 구조로 구현
+
 #include "ItemFactory.h"
 #include "Food.h"
 #include "Electronics.h"
@@ -65,14 +68,7 @@ std::shared_ptr<Item> ItemFactory::createItemByType(ItemType type, double weight
 // 랜덤 물품 생성함수
 std::shared_ptr<Item> ItemFactory::createRandomItem() {
 	ItemType type = generateRandomType();
-	bool isFragile = false;
-
-	if (type == ItemType::Fragile) {
-		isFragile = true;
-	}
-	else {
-		isFragile = generateRandomBool();
-	}
+	bool isFragile = (type == ItemType::Fragile) ? true : generateRandomBool();
 
 	return createItemByType(type, generateRandomWeight(), isFragile);
 }

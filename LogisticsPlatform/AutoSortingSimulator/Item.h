@@ -18,10 +18,10 @@ public:
 	virtual ~Item();
 
 	// 기본정보 확인
-	virtual void showInfo();
+	virtual void showInfo() const;
 
 	// 유효성 확인
-	virtual bool isValid();	
+	virtual bool isValid() const;	
 
 	// Setter
 	void setStatus(ItemStatus newStatus);

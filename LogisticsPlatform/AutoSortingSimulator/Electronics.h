@@ -11,10 +11,10 @@ public:
 	Electronics(double weight, bool isFragile);
 
 	// 기본정보 확인
-	void showInfo() override;
+	void showInfo() const override;
 
 	// 유효성 확인
-	bool isValid() override;
+	bool isValid() const override;
 };
 
 #endif

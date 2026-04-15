@@ -141,7 +141,9 @@
     <ClCompile Include="Item.cpp" />
     <ClCompile Include="ItemFactory.cpp" />
     <ClCompile Include="ItemUtils.cpp" />
+    <ClCompile Include="LogisticsService.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="ReportPrinter.cpp" />
     <ClCompile Include="Sorter.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -154,6 +156,9 @@
     <ClInclude Include="Item.h" />
     <ClInclude Include="ItemFactory.h" />
     <ClInclude Include="ItemUtils.h" />
+    <ClInclude Include="LogisticsService.h" />
+    <ClInclude Include="QueryResultTypes.h" />
+    <ClInclude Include="ReportPrinter.h" />
     <ClInclude Include="Sorter.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
