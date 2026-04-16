@@ -18,17 +18,17 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 
 ## 주요 기능
 
-1. 물품 생성 (Factory 기반 구조)
+### 1. 물품 생성 (Factory 기반 구조)
 - ItemFactory를 통해 객체 생성 책임 분리
 - 랜덤 타입 / 무게 / 속성 생성
 - Food, Electronics, Fragile 다형성 활용
 
-2. 컨베이어 시스템 (Queue 기반 처리)
+### 2. 컨베이어 시스템 (Queue 기반 처리)
 - std::queue를 활용한 FIFO 구조
 - 상태 변화 관리 (Queued → Processing)
 - 안전한 포인터 관리 (shared_ptr)
 
-3. 자동 분류 로직
+### 3. 자동 분류 로직
 - 속성 기반 분류 시스템 구현
 - dynamic_pointer_cast 활용한 타입 판별
 - 분류 기준
@@ -37,17 +37,17 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
     - Weight < 5kg → SmallLine
     - 그 외 → LargeLine
 
-4. 유효성 검사
+### 4. 유효성 검사
 - 공통 유효성: 타입, 무게 검증
 - 타입별 유효성 확장 가능 구조
 - 잘못된 데이터는 DB 저장 차단
 
-5. MySQL 연동
+### 5. MySQL 연동
 - MySQL Connector/C++ 사용
 - PreparedStatement 기반 안전한 INSERT
 - UTC → KST 시간 변환 처리
 
-6. 통계 및 조회 기능
+### 6. 통계 및 조회 기능
 - 통계 조회
     - 라인별 개수
     - 타입별 개수
@@ -62,11 +62,11 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
     - std::vector<LineStatistic>
     - std::vector<ItemRecord>
 
-7. 출력 로직 분리 (설계 개선)
+### 7. 출력 로직 분리 (설계 개선)
 - DB 조회와 출력 로직 분리
 - ReportPrinter에서 출력 담당
 
-8. 자동 실행 + 사용자 인터랙션
+### 8. 자동 실행 + 사용자 인터랙션
 - 자동 사이클: 물품 생성 → 처리 → 저장 반복
 - 인터랙티브 모드
     - Enter → 다음 사이클 실행
@@ -74,7 +74,7 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
     - q → 종료
 - 콘솔 UI 개선 (\r 기반 출력 덮어쓰기)
 
-9. 관리자 메뉴 시스템
+### 9. 관리자 메뉴 시스템
     - Admin Menu
         - Statistics
         - Query Results
@@ -84,12 +84,12 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 
 ## 설계 특징
 
-1. 객체지향 설계 (OOP)
+### 1. 객체지향 설계 (OOP)
     - 상속: Item → Food / Electronics / Fragile
     - 다형성: showInfo(), isValid()
     - 캡슐화: 상태 관리 및 접근 제어
 
-2. 역할 분리 (Separation of Concerns)
+### 2. 역할 분리 (Separation of Concerns)
 
 |역할|클래스|
 |:--|:--|
@@ -100,14 +100,14 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 |출력|ReportPrinter|
 |전체 흐름|LogisticsService|
 
-3. Factory 패턴 (부분 적용)
+### 3. Factory 패턴 (부분 적용)
     - 객체 생성 로직 캡슐화
     - 확장 가능 구조
 
-4. Service 계층 구조
+### 4. Service 계층 구조
     - main → LogisticsService → DatabaseManager
 
-5. 안전한 입력 처리
+### 5. 안전한 입력 처리
     - cin.fail() 처리
     - 입력 버퍼 정리
     - 잘못된 입력 방어 로직
