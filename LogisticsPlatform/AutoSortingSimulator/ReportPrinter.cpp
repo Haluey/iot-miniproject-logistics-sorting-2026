@@ -4,7 +4,7 @@
 
 // 통계 출력 함수
 void ReportPrinter::printLineStatistics(const std::vector<LineStatistic>& stats) {
-	std::cout << "===== Line Statistics =====" << std::endl;
+	std::cout << "\n===== Line Statistics =====" << std::endl;
 
 	if (stats.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;
@@ -19,7 +19,7 @@ void ReportPrinter::printLineStatistics(const std::vector<LineStatistic>& stats)
 }
 
 void ReportPrinter::printTypeStatistics(const std::vector<TypeStatistic>& stats) {
-	std::cout << "===== Type Statistics =====" << std::endl;
+	std::cout << "\n===== Type Statistics =====" << std::endl;
 
 	if (stats.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;
@@ -34,7 +34,7 @@ void ReportPrinter::printTypeStatistics(const std::vector<TypeStatistic>& stats)
 }
 
 void ReportPrinter::printWeightStatistics(const std::vector<WeightStatistic>& stats) {
-	std::cout << "===== Weight Statistics =====" << std::endl;
+	std::cout << "\n===== Weight Statistics =====" << std::endl;
 
 	if (stats.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;
@@ -52,7 +52,7 @@ void ReportPrinter::printWeightStatistics(const std::vector<WeightStatistic>& st
 
 // 목록 출력 함수
 void ReportPrinter::printItemsByLine(const std::vector<ItemRecord>& items, const std::string& lineName) {
-	std::cout << "===== Items in " << lineName << " =====" << std::endl;
+	std::cout << "\n===== Items in " << lineName << " =====" << std::endl;
 
 	if (items.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;
@@ -74,7 +74,7 @@ void ReportPrinter::printItemsByLine(const std::vector<ItemRecord>& items, const
 }
 
 void ReportPrinter::printTopNHeaviestItems(const std::vector<ItemRecord>& items, int limit) {
-	std::cout << "===== Top " << limit << " Heaviest Items =====" << std::endl;
+	std::cout << "\n===== Top " << limit << " Heaviest Items =====" << std::endl;
 
 	if (items.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;
@@ -94,7 +94,7 @@ void ReportPrinter::printTopNHeaviestItems(const std::vector<ItemRecord>& items,
 }
 
 void ReportPrinter::printRecentItems(const std::vector<ItemRecord>& items, int limit) {
-	std::cout << "===== Recent " << limit << " Items =====" << std::endl;
+	std::cout << "\n===== Recent " << limit << " Items =====" << std::endl;
 
 	if (items.empty()) {
 		std::cout << "[QUERY] No results found." << std::endl;

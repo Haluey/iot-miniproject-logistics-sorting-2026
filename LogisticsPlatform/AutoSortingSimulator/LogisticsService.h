@@ -8,6 +8,7 @@
 #include "ConveyorSystem.h"
 #include "Sorter.h"
 #include "DatabaseManager.h"
+#include "ReportPrinter.h"
 
 class LogisticsService {
 private:
@@ -15,11 +16,12 @@ private:
 	ConveyorSystem conveyorSystem;
 	Sorter sorter;
 	DatabaseManager& databaseManager;
-	//ReportPrinter
+	ReportPrinter reportPrinter;
 	int cycleCount;
 
-public:
-	LogisticsService(DatabaseManager& databaseManager);
+	void clearScreen();
+	void pauseScreen();
+	void clearInputBuffer();
 
 	// 물품을 1개 생성하고 컨베이어 큐에 적재하는 함수
 	void generateAndEnqueueItem();
@@ -31,9 +33,38 @@ public:
 	// (물품 생성 → 큐 적재 → 1개 처리)
 	void runOneCycle();
 
+
+	// 관리자 메인 메뉴 출력 함수
+	void showAdminMenu();
+
+	// 통계 조회 메뉴 출력 함수
+	void showStatisticsMenu();
+	// 통계 조회 메뉴 입력 처리 함수
+	void handleStatisticsMenu();
+
+	// 조건 기반 조회 메뉴 출력 함수
+	void showQueryMenu();
+	// 조건 기반 조회 메뉴 입력 처리 함수
+	void handleQueryMenu();
+
+	// 특정 라인 물품 조회 처리 함수
+	void handleItemsByLineQuery();
+	// 무게 상위 N개 조회 처리 함수
+	void handleTopNQuery();
+	// 최근 저장된 물품 조회 처리 함수
+	void handleRecentItemsQuery();
+
+public:
+	LogisticsService(DatabaseManager& databaseManager);	
+
 	// 일정 시간 간격으로 runOneCycle을 반복 실행하는 함수
 	// (intervalSeconds: 실행 주기(초))
 	void runAutoMode(int intervalSeconds);
+
+	// 관리자 메인 메뉴 입력 처리 함수
+	void handleAdminMenu();
+
+	void runInteractiveAutoMode(int intervalSeconds);
 };
 
 #endif
