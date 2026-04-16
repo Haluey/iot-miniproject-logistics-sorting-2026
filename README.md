@@ -114,6 +114,7 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 
 ## 실행 흐름
 
+```
 ===== Auto Cycle #1 =====
 [CREATE]
 [ENQUEUE]
@@ -123,6 +124,7 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 [SAVE]
 
 Press Enter to continue, [m] for menu, [q] to quit:
+```
 
 ## 기술 스택
 
