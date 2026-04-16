@@ -75,19 +75,19 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 - 콘솔 UI 개선 (\r 기반 출력 덮어쓰기)
 
 ### 9. 관리자 메뉴 시스템
-    - Admin Menu
-        - Statistics
-        - Query Results
-    - 입력 오류 처리 (cin fail 대응)
-    - 입력 버퍼 관리
-    - 화면 초기화 및 UX 개선
+- Admin Menu
+    - Statistics
+    - Query Results
+- 입력 오류 처리 (cin fail 대응)
+- 입력 버퍼 관리
+- 화면 초기화 및 UX 개선
 
 ## 설계 특징
 
 ### 1. 객체지향 설계 (OOP)
-    - 상속: Item → Food / Electronics / Fragile
-    - 다형성: showInfo(), isValid()
-    - 캡슐화: 상태 관리 및 접근 제어
+- 상속: Item → Food / Electronics / Fragile
+- 다형성: showInfo(), isValid()
+- 캡슐화: 상태 관리 및 접근 제어
 
 ### 2. 역할 분리 (Separation of Concerns)
 
@@ -101,16 +101,16 @@ Item 생성 → Queue 적재 → 처리 → 분류 → 저장 → 조회
 |전체 흐름|LogisticsService|
 
 ### 3. Factory 패턴 (부분 적용)
-    - 객체 생성 로직 캡슐화
-    - 확장 가능 구조
+- 객체 생성 로직 캡슐화
+- 확장 가능 구조
 
 ### 4. Service 계층 구조
-    - main → LogisticsService → DatabaseManager
+- main → LogisticsService → DatabaseManager
 
 ### 5. 안전한 입력 처리
-    - cin.fail() 처리
-    - 입력 버퍼 정리
-    - 잘못된 입력 방어 로직
+- cin.fail() 처리
+- 입력 버퍼 정리
+- 잘못된 입력 방어 로직
 
 ## 실행 흐름
 
